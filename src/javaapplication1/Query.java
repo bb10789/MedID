@@ -43,7 +43,7 @@ public class Query {
     public void openConnection() throws IOException, SQLException {
         conn = null;
         try {
-            String url = "jdbc:sqlite:MEDID.db";
+            String url = "jdbc:sqlite:MEDID.db"; //change filepath
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established");
 
@@ -53,7 +53,7 @@ public class Query {
     }
 
     public void closeConnection() throws SQLException {
-
+      conn.close();
     }
 
     // Prepare SQL Statements
@@ -61,7 +61,7 @@ public class Query {
         findUserStatement = conn.prepareStatement(FIND_USER);
         insertUserStatement = conn.prepareStatement(INSERT_USER);
         insertInteractionStatement = conn.prepareStatement(INSERT_INTERACTION);
-
+        clearTableStatement = conn.prepareStatement(CLEAR_TABLE);
     }
 
     // insert Users' personal information
@@ -135,6 +135,14 @@ public class Query {
             return null;
         }
         return storage;
+    }
+    
+    public void clearTable() {
+      try {
+         clearTableStatement.execute();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
     }
 
 }
