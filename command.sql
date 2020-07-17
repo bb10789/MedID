@@ -2,8 +2,9 @@ CREATE TABLE ID (
   id INT PRIMARY KEY NOT NULL UNIQUE,
   fname VARCHAR(20),
   lname VARCHAR(20),
-  phone VARCHAR(13),
-  location VARCHAR(150)
+  phone VARCHAR(14),
+  location VARCHAR(150),
+  password VARCHAR(128)
 );
 
 
