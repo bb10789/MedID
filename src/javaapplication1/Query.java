@@ -26,7 +26,7 @@ import java.time.temporal.Temporal;
 public class Query {
 
     private Connection conn;
-    private int userID = 50;
+    private int userID = 0;
     private int interactionID = 0;
 
     private static final String FIND_USER = "SELECT i.id2 AS otherID, COUNT(*) over() AS cnt\n"
@@ -43,7 +43,7 @@ public class Query {
     public void openConnection() throws IOException, SQLException {
         conn = null;
         try {
-            String url = "jdbc:sqlite:MEDID.db"; //change filepath
+            String url = "jdbc:sqlite:../MEDID.db"; //change filepath to ../MEDID.db and change back before push
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established");
 
