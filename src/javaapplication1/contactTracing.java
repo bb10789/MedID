@@ -10,6 +10,8 @@ import java.util.regex.*;
 import java.sql.*;
 import java.io.*;
 import java.util.*;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 /**
 *
 * @author Kelvin
@@ -39,40 +41,27 @@ public class contactTracing {
          int response = console.nextInt();
          console.nextLine();
          println("");
+         while (response != 1 && response != 2) {
+            println("Would you like to manually enter in users (1) or randomly " +
+                 "generate users (2)");
+            response = console.nextInt();
+            console.nextLine();
+         }
          
          if (response == 1) {
-            for (int i = 0; i < POPULATION; i++) {
-               println("Person " + (i + 1));
-               print("Enter First Name: ");
-               String fname = console.nextLine();
-               print("Enter Last Name: ");
-               String lname = console.nextLine();
-               print("Enter Phone Number: ");
-               String phone = console.nextLine();
-               print("Enter Address: ");
-               String address = console.nextLine();
-               q.insertUser(fname, lname, phone, address);
-               println("");
-            }
+            manualUsers(q, console);
          } else if (response == 2) {
-            for (int i = 0; i < POPULATION; i++) {
-               println("Person " + (i + 1));
-               String fname = GEN_FNAME + (i + 1);
-               String lname = GEN_LNAME + (i + 1);
-               String phone = genPhone();
-               String address = "Seattle, WA";
-               q.insertUser(fname, lname, phone, address);
-               println(fname);
-               println(lname);
-               println(phone);
-               println(address);
-               println("");
-            }
+            genUsers(q, console);
          }
          println("What is your id?");
          int userId = console.nextInt();
          console.nextLine();
          println("");
+         while (0 <= userId && userId <= POPULATION) {
+            userId = console.nextInt();
+            console.nextLine();
+            println("");
+         }
          for (int i = 0; i < TIME_PERIOD; i++) {
             int day = i + 1;
             println("Today is " + MONTH + "/" + day);
@@ -90,15 +79,51 @@ public class contactTracing {
                for (int id: atRisk) {
                   println("Person " + id + " is at risk");
                }
+               q.closeConnection();
                break;
             } else if (resp.equals("n")) {
                println("");
             }
          }
+         q.closeConnection();
       } catch (IOException error) {
          println(error.getMessage());
       } catch (SQLException error) {
          println(error.getMessage());
+      } catch (Exception error) {
+         println(error.getMessage());
+      }
+   }
+   
+   public static void manualUsers(Query q, Scanner console) throws NoSuchAlgorithmException, InvalidKeySpecException, Exception {
+      for (int i = 0; i < POPULATION; i++) {
+         println("Person " + (i + 1));
+         print("Enter First Name: ");
+         String fname = console.nextLine();
+         print("Enter Last Name: ");
+         String lname = console.nextLine();
+         print("Enter Phone Number: ");
+         String phone = console.nextLine();
+         print("Enter Address: ");
+         String address = console.nextLine();
+         q.insertUser(fname, lname, phone, address, "password");
+         println("");
+      }
+   }
+   
+   public static void genUsers(Query q, Scanner console) throws NoSuchAlgorithmException, InvalidKeySpecException, Exception {
+      for (int i = 0; i < POPULATION; i++) {
+         println("Person " + (i + 1));
+         String fname = GEN_FNAME + (i + 1);
+         String lname = GEN_LNAME + (i + 1);
+         String phone = genPhone();
+         String address = "Seattle, WA";
+         q.insertUser(fname, lname, phone, address, "password");
+         println(fname);
+         println(lname);
+         println(phone);
+         println(address);
+         println("");
       }
    }
    
