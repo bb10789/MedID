@@ -49,7 +49,7 @@ public class Query {
     public void openConnection() throws IOException, SQLException {
         conn = null;
         try {
-            String url = "jdbc:sqlite:MEDID.db"; //change filepath to ../MEDID.db and change back before push
+            String url = "jdbc:sqlite:../MEDID.db"; //change filepath to ../MEDID.db and change back before push
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established");
 

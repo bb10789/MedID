@@ -66,7 +66,8 @@ public class contactTracing {
       int userId = console.nextInt();
       console.nextLine();
       println("");
-      while (0 <= userId && userId <= POPULATION) {
+      while (userId < 0 || userId > POPULATION - 1) {
+         println("Please enter a valid id");
          userId = console.nextInt();
          console.nextLine();
          println("");
