@@ -10,6 +10,14 @@ import java.util.regex.*;
 import java.sql.*;
 import java.io.*;
 import java.util.*;
+import java.security.*;
+import java.security.spec.*;
+import javax.crypto.*;
+import javax.crypto.spec.*;
+import javax.sound.sampled.FloatControl;
+import java.sql.DriverManager;
+import java.time.temporal.Temporal;
+import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 /**
@@ -27,7 +35,7 @@ public class contactTracing {
    /**
    * @param args the command line arguments
    */
-   public static void main(String[] args) {
+   public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException, Exception {
       Scanner console = new Scanner(System.in);
       try {
          Query q = new Query();
