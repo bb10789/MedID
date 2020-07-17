@@ -4,7 +4,8 @@ CREATE TABLE ID (
   lname VARCHAR(20),
   phone VARCHAR(14),
   location VARCHAR(150),
-  password VARCHAR(128)
+  password VARCHAR(128),
+  salt VARCHAR(70)
 );
 
 
@@ -30,7 +31,11 @@ SELECT i.id2 AS otherID, COUNT(*) over() AS cnt
 FROM Interaction as i
 WHERE i.id1 == ?
 
-INSERT INTO ID VALUES (?, ?, ?, ?, ?)
+Select id.salt AS salt, id.password AS pass
+FROM ID AS id
+Where id.id = ?
+
+INSERT INTO ID VALUES (?, ?, ?, ?, ?, ?, ?)
 INSERT INTO ID VALUES (0, "Kelvin", "Kam", 206973, "Seattle WA")
 INSERT INTO ID VALUES (1, "Chris", "Yee", 123456, "BOSTON WA")
 INSERT INTO INTERACTION VALUES (0, 1, 30, 0, 1)
