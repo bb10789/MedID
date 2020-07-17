@@ -37,7 +37,9 @@ public class Query {
     private PreparedStatement insertUserStatement;
     private static final String INSERT_INTERACTION = "INSERT INTO INTERACTION VALUES (?, ?, ?, ?, ?)";
     private PreparedStatement insertInteractionStatement;
-    private static final String CLEAR_TABLE = "DELETE FROM INTERACTION; DELETE FROM ID;";
+    private static final String CLEAR_TABLE = "DELETE FROM ID;";
+    private static final String CLEAR_TABLE_INTER = "DELETE FROM INTERACTION";
+    private PreparedStatement clearTableInter;
     private PreparedStatement clearTableStatement;
     private static final String GET_SALT = "Select id.salt AS salt, id.password AS pass\n"
             + "FROM ID AS id\n"
@@ -47,7 +49,7 @@ public class Query {
     public void openConnection() throws IOException, SQLException {
         conn = null;
         try {
-            String url = "jdbc:sqlite:../MEDID.db"; //change filepath to ../MEDID.db and change back before push
+            String url = "jdbc:sqlite:MEDID.db"; //change filepath to ../MEDID.db and change back before push
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established");
 
@@ -67,6 +69,7 @@ public class Query {
         insertInteractionStatement = conn.prepareStatement(INSERT_INTERACTION);
         clearTableStatement = conn.prepareStatement(CLEAR_TABLE);
         getSaltStatement = conn.prepareStatement(GET_SALT);
+        clearTableInter = conn.prepareStatement(CLEAR_TABLE_INTER);
     }
 
     // insert Users' personal information
@@ -175,6 +178,7 @@ public class Query {
     public void clearTable() {
         try {
             clearTableStatement.execute();
+            clearTableInter.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
