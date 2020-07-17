@@ -35,56 +35,14 @@ public class contactTracing {
          q.prepareStatements();
          q.clearTable();
          
-         println("Would you like to manually enter in users (1) or randomly " +
-                 "generate users (2)");
-                 
-         int response = console.nextInt();
-         console.nextLine();
-         println("");
-         while (response != 1 && response != 2) {
-            println("Would you like to manually enter in users (1) or randomly " +
-                 "generate users (2)");
-            response = console.nextInt();
-            console.nextLine();
-         }
-         
-         if (response == 1) {
+         int userType = userType(console);
+         if (userType == 1) {
             manualUsers(q, console);
-         } else if (response == 2) {
+         } else if (userType == 2) {
             genUsers(q, console);
          }
-         println("What is your id?");
-         int userId = console.nextInt();
-         console.nextLine();
-         println("");
-         while (0 <= userId && userId <= POPULATION) {
-            userId = console.nextInt();
-            console.nextLine();
-            println("");
-         }
-         for (int i = 0; i < TIME_PERIOD; i++) {
-            int day = i + 1;
-            println("Today is " + MONTH + "/" + day);
-            int rdmPerson = randomPerson(userId);
-            println("You ran into Person " + rdmPerson);
-            q.insertInteraction(MONTH, day, userId, rdmPerson);
-            println("Would you like to self-report? (y/n)");
-            String resp = console.nextLine();
-            while (!resp.equals("y") && !resp.equals("n")) {
-               println("Would you like to self-report? (y/n)");
-               resp = console.nextLine();
-            }
-            if (resp.equals("y")) {
-               int[] atRisk = q.findUser(userId);
-               for (int id: atRisk) {
-                  println("Person " + id + " is at risk");
-               }
-               q.closeConnection();
-               break;
-            } else if (resp.equals("n")) {
-               println("");
-            }
-         }
+         int userId = promptUserId(console);
+         simulateDay(q, console, userId);
          q.closeConnection();
       } catch (IOException error) {
          println(error.getMessage());
@@ -93,6 +51,34 @@ public class contactTracing {
       } catch (Exception error) {
          println(error.getMessage());
       }
+   }
+   
+   public static int promptUserId(Scanner console) {
+      println("What is your id?");
+      int userId = console.nextInt();
+      console.nextLine();
+      println("");
+      while (0 <= userId && userId <= POPULATION) {
+         userId = console.nextInt();
+         console.nextLine();
+         println("");
+      }
+      return userId;
+   }
+   
+   public static int userType(Scanner console) {
+      println("Would you like to manually enter in users (1) or randomly " +
+                 "generate users (2)");    
+      int userType = console.nextInt();
+      console.nextLine();
+      println("");
+      while (userType != 1 && userType != 2) {
+         println("Would you like to manually enter in users (1) or randomly " +
+              "generate users (2)");
+         userType = console.nextInt();
+         console.nextLine();
+      }
+      return userType;
    }
    
    public static void manualUsers(Query q, Scanner console) throws NoSuchAlgorithmException, InvalidKeySpecException, Exception {
@@ -124,6 +110,32 @@ public class contactTracing {
          println(phone);
          println(address);
          println("");
+      }
+   }
+   
+   public static void simulateDay(Query q, Scanner console, int userId) throws SQLException {
+      for (int i = 0; i < TIME_PERIOD; i++) {
+         int day = i + 1;
+         println("Today is " + MONTH + "/" + day);
+         int rdmPerson = randomPerson(userId);
+         println("You ran into Person " + rdmPerson);
+         q.insertInteraction(MONTH, day, userId, rdmPerson);
+         println("Would you like to self-report? (y/n)");
+         String resp = console.nextLine();
+         while (!resp.equals("y") && !resp.equals("n")) {
+            println("Would you like to self-report? (y/n)");
+            resp = console.nextLine();
+         }
+         if (resp.equals("y")) {
+            int[] atRisk = q.findUser(userId);
+            for (int id: atRisk) {
+               println("Person " + id + " is at risk");
+            }
+            q.closeConnection();
+            break;
+         } else if (resp.equals("n")) {
+            println("");
+         }
       }
    }
    
