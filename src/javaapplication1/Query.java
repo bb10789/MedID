@@ -26,19 +26,23 @@ import java.time.temporal.Temporal;
 public class Query {
 
     private Connection conn;
-    private int userID = 50;
+    private int userID = 0;
     private int interactionID = 0;
 
     private static final String FIND_USER = "SELECT i.id2 AS otherID, COUNT(*) over() AS cnt\n"
             + "FROM Interaction as i\n"
             + "WHERE i.id1 == ?";
     private PreparedStatement findUserStatement;
-    private static final String INSERT_USER = "INSERT INTO ID VALUES (?, ?, ?, ?, ?)";
+    private static final String INSERT_USER = "INSERT INTO ID VALUES (?, ?, ?, ?, ?, ?, ?)";
     private PreparedStatement insertUserStatement;
     private static final String INSERT_INTERACTION = "INSERT INTO INTERACTION VALUES (?, ?, ?, ?, ?)";
     private PreparedStatement insertInteractionStatement;
     private static final String CLEAR_TABLE = "DELETE FROM INTERACTION; DELETE FROM ID;";
     private PreparedStatement clearTableStatement;
+    private static final String GET_SALT = "Select id.salt AS salt, id.password AS pass\n"
+            + "FROM ID AS id\n"
+            + "Where id.id = ?";
+    private PreparedStatement getSaltStatement;
 
     public void openConnection() throws IOException, SQLException {
         conn = null;
@@ -53,7 +57,7 @@ public class Query {
     }
 
     public void closeConnection() throws SQLException {
-      conn.close();
+        conn.close();
     }
 
     // Prepare SQL Statements
@@ -62,10 +66,12 @@ public class Query {
         insertUserStatement = conn.prepareStatement(INSERT_USER);
         insertInteractionStatement = conn.prepareStatement(INSERT_INTERACTION);
         clearTableStatement = conn.prepareStatement(CLEAR_TABLE);
+        getSaltStatement = conn.prepareStatement(GET_SALT);
     }
 
     // insert Users' personal information
-    public void insertUser(String fname, String lname, String phone, String address) {
+    public void insertUser(String fname, String lname, String phone, String address,
+            String password) throws NoSuchAlgorithmException, InvalidKeySpecException, Exception {
         try {
             insertUserStatement.clearParameters();
             insertUserStatement.setInt(1, userID++);
@@ -73,11 +79,40 @@ public class Query {
             insertUserStatement.setString(3, lname);
             insertUserStatement.setString(4, phone);
             insertUserStatement.setString(5, address);
+            byte[] salt = PBKDF2WithHmacSHA512.salt();
+            String ssalt = PBKDF2WithHmacSHA512.convertToString(salt);
+            byte[] pass = PBKDF2WithHmacSHA512.hash(password, salt);
+            insertUserStatement.setString(6, PBKDF2WithHmacSHA512.convertToString(pass));
+            insertUserStatement.setString(7, ssalt);
             insertUserStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+    }
+
+    // Check if the password is correct
+    // pre: ID must be within valid range 
+    // post: return true if password is correct
+    public boolean authenticate(int id, String password) throws Exception {
+        if (id >= userID) {
+            System.out.println("Invalid ID");
+            return false;
+        }
+        try {
+            getSaltStatement.clearParameters();
+            getSaltStatement.setInt(1, id);
+            ResultSet result = getSaltStatement.executeQuery();
+            String ssalt, sPass;
+            ssalt = result.getString("salt");
+            sPass = result.getString("pass"); // actual password
+            byte[] saltByte = PBKDF2WithHmacSHA512.toByteArray(ssalt);
+            byte[] realPasswordByte = PBKDF2WithHmacSHA512.toByteArray(sPass);
+            return PBKDF2WithHmacSHA512.authenticate(password, saltByte, realPasswordByte);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     // insert an interaction
@@ -136,13 +171,13 @@ public class Query {
         }
         return storage;
     }
-    
+
     public void clearTable() {
-      try {
-         clearTableStatement.execute();
-      } catch (SQLException e) {
-         e.printStackTrace();
-      }
+        try {
+            clearTableStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
