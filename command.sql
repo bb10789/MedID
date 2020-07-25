@@ -1,27 +1,27 @@
-CREATE TABLE ID (
-  id INT PRIMARY KEY NOT NULL UNIQUE,
-  fname VARCHAR(20),
-  lname VARCHAR(20),
-  phone VARCHAR(14),
+CREATE TABLE UserID (
+  id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  fname VARCHAR(20) NOT NULL,
+  lname VARCHAR(20) NOT NULL,
+  phone VARCHAR(14)NOT NULL,
+  email VARCHAR(100) NOT NULL,
   location VARCHAR(150),
-  password VARCHAR(128),
-  salt VARCHAR(70)
+  password VARCHAR(128) NOT NULL,
+  salt VARCHAR(70) NOT NULL
 );
 
 
 CREATE TABLE Month (
   mid int PRIMARY KEY,
-  month VARCHAR(10)
+  month_spelled VARCHAR(10)
 );
 
 CREATE TABLE Interaction (
   Interaction_id INT PRIMARY KEY,
-  month_id INT REFERENCES Month(mid),
-  day_of_month INT,
+  inter_date DATE,
   id1 INT,
   id2 INT,
-  FOREIGN KEY (id1) REFERENCES ID(id),
-  FOREIGN KEY (id2) REFERENCES ID(id)
+  FOREIGN KEY (id1) REFERENCES UserID(id),
+  FOREIGN KEY (id2) REFERENCES UserID(id)
 );
 
 
@@ -46,9 +46,9 @@ Select id.salt AS salt, id.password AS pass
 FROM ID AS id
 Where id.id = ?
 
-INSERT INTO ID VALUES (?, ?, ?, ?, ?, ?, ?)
-INSERT INTO ID VALUES (0, "Kelvin", "Kam", 206973, "Seattle WA")
-INSERT INTO ID VALUES (1, "Chris", "Yee", 123456, "BOSTON WA")
+INSERT INTO UserID VALUES (?, ?, ?, ?, ?, ?, ?)
+INSERT INTO UserID VALUES (0, "Kelvin", "Kam", 206973, "Seattle WA")
+INSERT INTO UserID VALUES (1, "Chris", "Yee", 123456, "BOSTON WA")
 INSERT INTO INTERACTION VALUES (0, 1, 30, 0, 1)
 INSERT INTO INTERACTION VALUES (?, ?, ?, ?, ?)
 DELETE FROM INTERACTION; DELETE FROM ID;
