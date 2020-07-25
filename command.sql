@@ -16,10 +16,10 @@ CREATE TABLE Month (
 );
 
 CREATE TABLE Interaction (
-  Interaction_id INT PRIMARY KEY,
-  inter_date DATE,
-  id1 INT,
-  id2 INT,
+  Interaction_id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  inter_date DATE NOT NULL,
+  id1 INT NOT NULL,
+  id2 INT NOT NULL,
   FOREIGN KEY (id1) REFERENCES UserID(id),
   FOREIGN KEY (id2) REFERENCES UserID(id)
 );

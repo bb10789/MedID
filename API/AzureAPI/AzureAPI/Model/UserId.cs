@@ -8,11 +8,11 @@ namespace AzureAPI.Model
     [Table("UserID")]
     public partial class UserId
     {
-        //public UserId()
-        //{
-        //    InteractionId1Navigation = new HashSet<Interaction>();
-        //    InteractionId2Navigation = new HashSet<Interaction>();
-        //}
+        public UserId()
+        {
+            InteractionId1Navigation = new HashSet<Interaction>();
+            InteractionId2Navigation = new HashSet<Interaction>();
+        }
 
         [Key]
         [Column("id")]
@@ -29,9 +29,9 @@ namespace AzureAPI.Model
         [Column("phone")]
         [StringLength(14)]
         public string Phone { get; set; }
+        [Required]
         [Column("email")]
         [StringLength(100)]
-        [Required]
         public string Email { get; set; }
         [Column("location")]
         [StringLength(150)]
@@ -45,9 +45,9 @@ namespace AzureAPI.Model
         [StringLength(70)]
         public string Salt { get; set; }
 
-        //[InverseProperty(nameof(Interaction.Id1Navigation))]
-        //public virtual ICollection<Interaction> InteractionId1Navigation { get; set; }
-        //[InverseProperty(nameof(Interaction.Id2Navigation))]
-        //public virtual ICollection<Interaction> InteractionId2Navigation { get; set; }
+        [InverseProperty(nameof(Interaction.Id1Navigation))]
+        public virtual ICollection<Interaction> InteractionId1Navigation { get; set; }
+        [InverseProperty(nameof(Interaction.Id2Navigation))]
+        public virtual ICollection<Interaction> InteractionId2Navigation { get; set; }
     }
 }

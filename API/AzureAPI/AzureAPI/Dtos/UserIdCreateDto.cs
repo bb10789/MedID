@@ -6,11 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace AzureAPI.Dtos {
-    public class UserIdCreateDto { 
+    public class UserIdCreateDto {
         [Required]
         [Column("fname")]
         [StringLength(20)]
-    public string Fname { get; set; }
+        public string Fname { get; set; }
         [Required]
         [Column("lname")]
         [StringLength(20)]

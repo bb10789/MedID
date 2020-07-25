@@ -27,7 +27,8 @@ namespace AzureAPI {
         public void ConfigureServices(IServiceCollection services) {
             services.AddDbContext<MedidContext>(opt => opt.UseSqlServer(
                 Configuration.GetConnectionString("MedidConnection")));
-            services.AddControllers().AddNewtonsoftJson(s => {
+            services.AddControllers().AddNewtonsoftJson(s =>
+            {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
             services.AddControllers();

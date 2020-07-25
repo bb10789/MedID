@@ -11,6 +11,7 @@ namespace AzureAPI.Profiles {
         public MedidProfile() {
             CreateMap<UserId, UserIdCreateDto>();
             CreateMap<UserIdCreateDto, UserId>();
+            CreateMap<InteractionCreateDto, Interaction>();
         }
     }
 }
