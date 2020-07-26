@@ -10,9 +10,9 @@ namespace AzureAPI.Model
     {
         public UserId()
         {
-            InteractionId1Navigation = new HashSet<Interaction>();
+            //InteractionId1Navigation = new HashSet<Interaction>();
 
-            InteractionId2Navigation = new HashSet<Interaction>();
+            //InteractionId2Navigation = new HashSet<Interaction>();
         }
 
         [Key]
@@ -37,18 +37,10 @@ namespace AzureAPI.Model
         [Column("location")]
         [StringLength(150)]
         public string Location { get; set; }
-        [Required]
-        [Column("password")]
-        [StringLength(128)]
-        public string Password { get; set; }
-        [Required]
-        [Column("salt")]
-        [StringLength(70)]
-        public string Salt { get; set; }
 
-        [InverseProperty(nameof(Interaction.Id1Navigation))]
-        public virtual ICollection<Interaction> InteractionId1Navigation { get; set; }
-        [InverseProperty(nameof(Interaction.Id2Navigation))]
-        public virtual ICollection<Interaction> InteractionId2Navigation { get; set; }
+        //[InverseProperty(nameof(Interaction.Id1Navigation))]
+        //public virtual ICollection<Interaction> InteractionId1Navigation { get; set; }
+        //[InverseProperty(nameof(Interaction.Id2Navigation))]
+        //public virtual ICollection<Interaction> InteractionId2Navigation { get; set; }
     }
 }

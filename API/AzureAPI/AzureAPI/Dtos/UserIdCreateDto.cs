@@ -26,13 +26,5 @@ namespace AzureAPI.Dtos {
         [Column("location")]
         [StringLength(150)]
         public string Location { get; set; }
-        [Required]
-        [Column("password")]
-        [StringLength(128)]
-        public string Password { get; set; }
-        [Required]
-        [Column("salt")]
-        [StringLength(70)]
-        public string Salt { get; set; }
     }
 }

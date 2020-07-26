@@ -21,11 +21,11 @@ namespace AzureAPI.Model
         [Column("id2")]
         public int Id2 { get; set; }
 
-        [ForeignKey(nameof(Id1))]
-        [InverseProperty(nameof(UserId.InteractionId1Navigation))]
-        public virtual UserId Id1Navigation { get; set; }
-        [ForeignKey(nameof(Id2))]
-        [InverseProperty(nameof(UserId.InteractionId2Navigation))]
-        public virtual UserId Id2Navigation { get; set; }
+    //    [ForeignKey(nameof(Id1))]
+    //    [InverseProperty(nameof(UserId.InteractionId1Navigation))]
+    //    public virtual UserId Id1Navigation { get; set; }
+    //    [ForeignKey(nameof(Id2))]
+    //    [InverseProperty(nameof(UserId.InteractionId2Navigation))]
+    //    public virtual UserId Id2Navigation { get; set; }
     }
 }

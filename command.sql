@@ -10,10 +10,6 @@ CREATE TABLE UserID (
 );
 
 
-CREATE TABLE Month (
-  mid int PRIMARY KEY,
-  month_spelled VARCHAR(10)
-);
 
 CREATE TABLE Interaction (
   Interaction_id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
@@ -24,6 +20,9 @@ CREATE TABLE Interaction (
   FOREIGN KEY (id2) REFERENCES UserID(id)
 );
 
+SELECT i.id2 AS otherID
+FROM Interaction as i
+WHERE i.id1 == ?
 
 INSERT INTO MONTH VALUES(1, "Jan");
 INSERT INTO MONTH VALUES(2, "Feb");
