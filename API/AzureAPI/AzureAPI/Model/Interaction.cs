@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AzureAPI.Model
 {
+    [Table("Interaction")]
     public partial class Interaction
     {
         [Key]

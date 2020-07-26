@@ -12,6 +12,7 @@ namespace AzureAPI.Profiles {
             CreateMap<UserId, UserIdCreateDto>();
             CreateMap<UserIdCreateDto, UserId>();
             CreateMap<InteractionCreateDto, Interaction>();
+            CreateMap<Interaction, InteractionCreateDto>();
         }
     }
 }

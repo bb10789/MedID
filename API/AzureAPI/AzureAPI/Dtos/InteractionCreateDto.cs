@@ -8,9 +8,6 @@ using System.Threading.Tasks;
 
 namespace AzureAPI.Dtos {
     public class InteractionCreateDto {
-        [Key]
-        [Column("Interaction_id")]
-        public int InteractionId { get; set; }
         [Required]
         [Column("inter_date", TypeName = "date")]
         public DateTime InterDate { get; set; }

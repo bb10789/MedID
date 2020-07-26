@@ -11,6 +11,7 @@ namespace AzureAPI.Model
         public UserId()
         {
             InteractionId1Navigation = new HashSet<Interaction>();
+
             InteractionId2Navigation = new HashSet<Interaction>();
         }
 

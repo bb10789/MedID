@@ -71,7 +71,7 @@ namespace AzureAPI.Controllers {
         [HttpPost]
         public async Task<ActionResult<UserId>> PostUserId(UserIdCreateDto userIdCreateDto) {
             var userId = _mapper.Map<UserId>(userIdCreateDto);
-            _context.UserId.Add(userId);
+           _context.UserId.Add(userId);
             try {
                 await _context.SaveChangesAsync();
             }
@@ -84,7 +84,7 @@ namespace AzureAPI.Controllers {
                 }
             }
 
-            return CreatedAtRoute(nameof(GetUserId), new { id = userId.Id }, userIdCreateDto);
+            return CreatedAtRoute(nameof(GetUserId), new { id = userId.Id }, userId);
         }
 
         // DELETE: api/UserIds/5

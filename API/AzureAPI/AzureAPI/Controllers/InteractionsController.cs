@@ -10,11 +10,13 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace AzureAPI.Controllers {
-    public class InteractionController : ControllerBase{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class InteractionsController : ControllerBase {
         private readonly MedidContext _context;
         private readonly IMapper _mapper;
 
-        public InteractionController(MedidContext context, IMapper mapper) {
+        public InteractionsController(MedidContext context, IMapper mapper) {
             _context = context;
             _mapper = mapper;
         }
@@ -36,12 +38,24 @@ namespace AzureAPI.Controllers {
         [HttpPost]
         public async Task<ActionResult<Interaction>> PostInteraction(InteractionCreateDto interactionCreateDto) {
             var interaction = _mapper.Map<Interaction>(interactionCreateDto);
+            _context.Interaction.Add(interaction);
+            try {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException) {
+                if (InteractionExists(interaction.InteractionId)) {
+                    return Conflict();
+                }
+                else {
+                    throw;
+                }
+            }
             await _context.SaveChangesAsync();
             return CreatedAtRoute(nameof(GetInteraction), new { id = interaction.InteractionId }, interaction);
 
         }
-        
-        [HttpPost]
+
+        [HttpPut("{id}")]
         public async Task<ActionResult> PutInteraction(int id, Interaction interaction) {
             if (id != interaction.InteractionId) {
                 return BadRequest();
@@ -62,7 +76,7 @@ namespace AzureAPI.Controllers {
             return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<Interaction>> DeleteInteraction(int id) {
             var interaction = await _context.Interaction.FindAsync(id);
             if (interaction == null) {
