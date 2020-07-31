@@ -28,6 +28,11 @@
       e.preventDefault();
       submitInteraction();
     });
+    id("register_user_btn").addEventListener("click", displayRegisterUserForm);
+    id("register_user_form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      registerUser();
+    });
   }
 
   function getAllUserIds() {
@@ -152,7 +157,14 @@
       id2: id2,
     };
     console.log(params);
-    fetch(URL + "/Interactions", { method: "POST", body: params })
+    fetch(URL + "/Interactions", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
+    })
       .then(checkStatus)
       .then((res) => res.json())
       .then(displayInteractionSuccess)
@@ -160,8 +172,45 @@
   }
 
   function displayInteractionSuccess(interaction) {
+    console.log(interaction);
     let msg = gen("p");
     msg.textContent = "Your interaction has been successfully submitted, the id is " + interaction.interactionId;
+    id("display").appendChild(msg);
+  }
+
+  function registerUser() {
+    hideAllViews();
+    let fname = id("fname").value;
+    let lname = id("lname").value;
+    let phone = id("phone").value;
+    let email = id("email").value;
+    let location = id("location").value;
+    let params = {
+      fname: fname,
+      lname: lname,
+      phone: phone,
+      email: email,
+      location: location,
+    };
+    console.log(params);
+    fetch(URL + "/UserIds", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
+    })
+      .then(checkStatus)
+      .then((res) => res.json())
+      .then(displayRegistrationMsg)
+      .catch(handleRequestError);
+  }
+
+  function displayRegistrationMsg(user) {
+    console.log(user);
+    let msg = gen("p");
+    msg.textContent = "Registration successful, your ID is " + user.id;
     id("display").appendChild(msg);
   }
 
@@ -178,6 +227,11 @@
   function displayInteractionForm() {
     hideAllViews();
     id("report_interaction_view").classList.remove("hidden");
+  }
+
+  function displayRegisterUserForm() {
+    hideAllViews();
+    id("register_user_view").classList.remove("hidden");
   }
 
   function hideAllViews() {
@@ -200,7 +254,6 @@
     } else {
       throw Error(response.statusText);
     }
-    // return response;
   }
 
   /**
