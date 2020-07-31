@@ -12,7 +12,7 @@ namespace AzureAPI.Model
         [Column("Interaction_id")]
         public int InteractionId { get; set; }
         [Required]
-        [Column("inter_date", TypeName = "date")]
+        [Column("inter_date", TypeName = "dateTime")]
         public DateTime InterDate { get; set; }
         [Required]
         [Column("id1")]

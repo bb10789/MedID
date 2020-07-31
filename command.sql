@@ -5,15 +5,13 @@ CREATE TABLE UserID (
   phone VARCHAR(14)NOT NULL,
   email VARCHAR(100) NOT NULL,
   location VARCHAR(150),
-  password VARCHAR(128) NOT NULL,
-  salt VARCHAR(70) NOT NULL
 );
 
 
 
 CREATE TABLE Interaction (
   Interaction_id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-  inter_date DATE NOT NULL,
+  inter_date DATETIME NOT NULL,
   id1 INT NOT NULL,
   id2 INT NOT NULL,
   FOREIGN KEY (id1) REFERENCES UserID(id),
