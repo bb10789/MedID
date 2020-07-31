@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+  MedID API test website
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>MedID API Test</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <header>MedID API Testing</header>
+    <main>
+      <section>
+        <button id="all_user_ids_btn">Display All User Ids</button>
+        <button id="user_id_btn">Look Up User</button>
+        <button id="all_interactions_btn">Display All Interaction Ids</button>
+        <button id="interaction_id_btn">Look Up Interaction</button>
+        <button id="report_interaction_btn">Report Interaction</button>
+        <button id="register_user_btn">Register User</button>
+      </section>
+
+      <section id="user_id_view" class="hidden view">
+        <form id="user_id_form">
+          <label for="user_id">Enter User ID: </label>
+          <input id="user_id" name="userId" type="number" required />
+          <button id="user_id_submit_btn" type="submit">Submit</button>
+        </form>
+      </section>
+
+      <section id="interaction_id_view" class="hidden view">
+        <form id="interaction_id_form">
+          <label for="interaction_id">Enter Interaction ID: </label>
+          <input id="interaction_id" name="interaction_id" type="number" required />
+          <button id="interaction_id_submit_btn" type="submit">Submit</button>
+        </form>
+      </section>
+
+      <section id="report_interaction_view" class="hidden view">
+        <form id="interaction_form">
+          <label for="inter_date">Interaction Date</label>
+          <input id="inter_date" name="inter_date" type="date" value="2020-07-28" required />
+          <label for="id1">Person 1's ID: </label>
+          <input id="id1" name="id1" type="number" required />
+          <label for="id2">Person 2's ID</label>
+          <input id="id2" name="id2" type="number" required />
+          <button id="inter_submit_btn" type="submit">Submit Interaction</button>
+        </form>
+      </section>
+
+      <section id="register_user_view" class="hidden view">
+        <form id="register_user_form">
+          <label for="fname">First Name: </label>
+          <input id="fname" name="fname" type="text" required />
+          <label for="lname">Last Name: </label>
+          <input id="lname" name="lname" type="text" required />
+          <label for="phone">Phone Number: </label>
+          <input id="phone" name="phone" type="text" required />
+          <label for="email">Email: </label>
+          <input id="email" name="email" type="text" required />
+          <label for="location">Location: </label>
+          <input id="location" name="location" type="text" required />
+          <button id="register_user_submit_btn" type="submit">Register</button>
+        </form>
+      </section>
+
+      <section id="display"></section>
+    </main>
+  </body>
+</html>

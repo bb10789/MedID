@@ -1,0 +1,12 @@
+/*
+Styles page for MedID API test website.
+*/
+
+section {
+  white-space: pre-line;
+  /* white-space: pre; */
+}
+
+.hidden {
+  display: none;
+}
