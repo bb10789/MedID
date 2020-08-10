@@ -148,11 +148,9 @@
 
   function submitInteraction() {
     hideAllViews();
-    let date = id("inter_date").value;
     let id1 = id("id1").value;
     let id2 = id("id2").value;
     let params = {
-      Inter_date: date,
       id1: id1,
       id2: id2,
     };
@@ -265,7 +263,7 @@
     console.log(error);
     id("display").innerHTML = "";
     let errorMsg = gen("p");
-    errorMsg.textContent = "An error has occurred, ID may be invalid";
+    errorMsg.textContent = "An error has occurred, if an ID was inputed, it may be invalid";
     id("display").appendChild(errorMsg);
   }
 
