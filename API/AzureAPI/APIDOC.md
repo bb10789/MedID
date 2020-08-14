@@ -1,5 +1,5 @@
 # MedID API Documentation
-The API stores users and interactions in a database and returns user and interaction infromation back to the user depending on the request.
+The API stores users and interactions in a database and returns user and interaction information back to the user depending on the request.
 
 # All Users
 **Request Format:** /UserIds
