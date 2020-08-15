@@ -2,9 +2,52 @@
 Styles page for MedID API test website.
 */
 
+html {
+  background-color: #e8e8e8;
+  /* background-color: grey; */
+}
+
 section {
   white-space: pre-line;
-  /* white-space: pre; */
+}
+
+button {
+  border-radius: 5px;
+  margin: 2px;
+  font-size: 12pt;
+  background-color: white;
+}
+
+header {
+  text-align: center;
+  margin: 10px;
+  font-size: 32pt;
+}
+
+#display > p {
+  background-color: white;
+  border: 1px solid black;
+  box-shadow: 2px 5px grey;
+  padding: 3px;
+}
+
+#buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#search_contacts_btn {
+  background-color: yellow;
+}
+
+.get {
+  background-color: lightblue;
+}
+
+.post {
+  background-color: lightgreen;
 }
 
 .hidden {

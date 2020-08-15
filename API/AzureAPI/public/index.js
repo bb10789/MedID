@@ -230,14 +230,14 @@
     console.log(contacts);
     let msg = gen("p");
     let text = "Person " + id("search_contacts_id").value + " has come into contact with ";
-    if (!contacts) {
+    if (contacts.length === 0) {
       text += "no one";
     } else {
       for (let contact of contacts) {
         text += "Person " + contact + ", ";
       }
+      text = text.substring(0, text.length - 2);
     }
-    text = text.substring(0, text.length - 2);
     msg.textContent = text;
     id("display").appendChild(msg);
   }
