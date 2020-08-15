@@ -33,6 +33,11 @@
       e.preventDefault();
       registerUser();
     });
+    id("search_contacts_btn").addEventListener("click", displaySearchContactsForm);
+    id("search_contacts_form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      searchContacts();
+    });
   }
 
   function getAllUserIds() {
@@ -212,6 +217,31 @@
     id("display").appendChild(msg);
   }
 
+  function searchContacts() {
+    hideAllViews();
+    fetch(URL + "/Search/" + id("search_contacts_id").value)
+      .then(checkStatus)
+      .then((res) => res.json())
+      .then(displayContacts)
+      .catch(handleRequestError);
+  }
+
+  function displayContacts(contacts) {
+    console.log(contacts);
+    let msg = gen("p");
+    let text = "Person " + id("search_contacts_id").value + " has come into contact with ";
+    if (!contacts) {
+      text += "no one";
+    } else {
+      for (let contact of contacts) {
+        text += "Person " + contact + ", ";
+      }
+    }
+    text = text.substring(0, text.length - 2);
+    msg.textContent = text;
+    id("display").appendChild(msg);
+  }
+
   function displayUserIdForm() {
     hideAllViews();
     id("user_id_view").classList.remove("hidden");
@@ -230,6 +260,11 @@
   function displayRegisterUserForm() {
     hideAllViews();
     id("register_user_view").classList.remove("hidden");
+  }
+
+  function displaySearchContactsForm() {
+    hideAllViews();
+    id("search_contacts_view").classList.remove("hidden");
   }
 
   function hideAllViews() {
