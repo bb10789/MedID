@@ -1,5 +1,6 @@
 # MedID API Documentation
 The API stores users and interactions in a database and returns user and interaction information back to the user depending on the request.
+Link to API: https://med-id.azurewebsites.net/api/
 
 # All Users
 **Request Format:** /UserIds
